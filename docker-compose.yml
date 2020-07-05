@@ -1,0 +1,19 @@
+version: "3.7"
+
+services:
+  db:
+    image: postgres
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: password
+      POSTGRES_DB: glyphdb
+      TZ: Europe/Bucharest
+      PGTZ: Europe/Bucharest
+    ports:
+      - "54321:5432"
+    volumes:
+      - glyphdb_pgdb:/var/lib/postgresql/glyphdb_data
+      - ./init_db.sql:/docker-entrypoint-initdb.d/init_db.sql
+
+volumes:
+  glyphdb_pgdb:

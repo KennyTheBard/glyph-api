@@ -1,0 +1,20 @@
+{
+  "name": "glyph-api",
+  "version": "1.0.0",
+  "description": "",
+  "main": "start.js",
+  "scripts": {
+    "start-prod": "node start.js",
+    "start": "nodemon -r dotenv/config start.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/KennyTheBard/glyph-api.git"
+  },
+  "author": "KennyTheBard",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/KennyTheBard/glyph-api/issues"
+  },
+  "homepage": "https://github.com/KennyTheBard/glyph-api#readme"
+}
