@@ -6,11 +6,13 @@ CREATE TABLE user_account (
   birth_date date,
   registration_date date,
   activated bool
+  activationCode text
 );
 
 CREATE TABLE story (
   id SERIAL PRIMARY KEY,
   author_id int,
+  starting_scene_id int,
   title text,
   description text,
   published bool
@@ -48,7 +50,7 @@ CREATE TABLE scene (
 
 CREATE TABLE choice (
   id SERIAL PRIMARY KEY,
-  scene_id int,
+  parent_scene_id int,
   next_scene_id int,
   title text,
   content text,
@@ -89,6 +91,8 @@ CREATE TABLE story_review (
 
 ALTER TABLE story ADD FOREIGN KEY (author_id) REFERENCES user_account (id);
 
+ALTER TABLE story ADD FOREIGN KEY (starting_scene_id) REFERENCES scene (id);
+
 ALTER TABLE story_variable ADD FOREIGN KEY (story_id) REFERENCES story (id);
 
 ALTER TABLE story_instance ADD FOREIGN KEY (user_id) REFERENCES user_account (id);
@@ -101,7 +105,7 @@ ALTER TABLE story_instance_variable ADD FOREIGN KEY (story_variable_id) REFERENC
 
 ALTER TABLE scene ADD FOREIGN KEY (story_id) REFERENCES story (id);
 
-ALTER TABLE choice ADD FOREIGN KEY (scene_id) REFERENCES scene (id);
+ALTER TABLE choice ADD FOREIGN KEY (parent_scene_id) REFERENCES scene (id);
 
 ALTER TABLE choice ADD FOREIGN KEY (next_scene_id) REFERENCES scene (id);
 
