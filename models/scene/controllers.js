@@ -22,7 +22,7 @@ router.post('/', async (req, res, next) => {
     } = req.body;
 
     try {
-        SceneService.create(storyId, title, content, template, note)
+        await SceneService.create(storyId, title, content, template, note)
 
         res.status(201).end();
     } catch (err) {
@@ -36,7 +36,7 @@ router.get('/:sceneId', extractPathParam('sceneId'), async (req, res, next) => {
     } = req.params;
     
     try {
-        const scene = SceneService.getById(sceneId)
+        const scene = await SceneService.getById(sceneId)
 
         res.json(scene);
     } catch (err) {
@@ -56,7 +56,7 @@ router.put('/:sceneId/details', extractPathParam('sceneId'), async (req, res, ne
     } = req.body;
 
     try {
-        SceneService.setDetails(sceneId, title, content, template, note)
+        await SceneService.setDetails(sceneId, title, content, template, note)
 
         res.status(200);
     } catch (err) {

@@ -1,6 +1,7 @@
 const express = require('express');
 
 const StoryService = require('./services.js');
+const SceneService = require('../scene/services.js');
 const {
     ServerError
 } = require('../../errors');
@@ -14,7 +15,7 @@ router.post('/', async (req, res, next) => {
     } = req.body;
 
     try {
-        StoryService.create(req.state.decoded.userId, title, description)
+        await StoryService.create(req.state.decoded.userId, title, description);
 
         res.status(201).end();
     } catch (err) {
@@ -28,7 +29,7 @@ router.get('/:storyId', extractPathParam('storyId'), async (req, res, next) => {
     } = req.params;
     
     try {
-        const story = StoryService.getById(storyId)
+        const story = await StoryService.getById(storyId);
 
         res.json(story);
     } catch (err) {
@@ -45,7 +46,8 @@ router.put('/:storyId/starting-scene', extractPathParam('storyId'), async (req, 
     } = req.body;
 
     try {
-        StoryService.setStartingScene(storyId, startingSceneId)
+        await SceneService.getById(startingSceneId);
+        await StoryService.setStartingScene(storyId, startingSceneId);
 
         res.status(200);
     } catch (err) {
@@ -63,7 +65,7 @@ router.put('/:storyId/details', extractPathParam('storyId'), async (req, res, ne
     } = req.body;
 
     try {
-        StoryService.setDetails(storyId, title, description)
+        await StoryService.setDetails(storyId, title, description);
 
         res.status(200);
     } catch (err) {

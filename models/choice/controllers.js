@@ -10,6 +10,7 @@ const {
 
 const router = express.Router();
 
+// create
 router.post('/', async (req, res, next) => {
     const {
         title,
@@ -19,7 +20,7 @@ router.post('/', async (req, res, next) => {
     } = req.body;
 
     try {
-        ChoiceService.create(title, content,template, note)
+        await ChoiceService.create(title, content,template, note)
 
         res.status(201).end();
     } catch (err) {
@@ -27,13 +28,14 @@ router.post('/', async (req, res, next) => {
     }
 });
 
+// get one by id
 router.get('/:choiceId', extractPathParam('choiceId'), async (req, res, next) => {
     const {
         choiceId
     } = req.params;
     
     try {
-        const scene = ChoiceService.getById(choiceId)
+        const scene = await ChoiceService.getById(choiceId)
 
         res.json(scene);
     } catch (err) {
@@ -41,13 +43,14 @@ router.get('/:choiceId', extractPathParam('choiceId'), async (req, res, next) =>
     }
 });
 
+// get all choices of a scene
 router.get('/all/:sceneId', extractPathParam('sceneId'), async (req, res, next) => {
     const {
         sceneId
     } = req.params;
     
     try {
-        const scenes = ChoiceService.getAllBySceneId(sceneId)
+        const scenes = await ChoiceService.getAllBySceneId(sceneId)
 
         res.json(scenes);
     } catch (err) {
@@ -55,6 +58,7 @@ router.get('/all/:sceneId', extractPathParam('sceneId'), async (req, res, next) 
     }
 });
 
+// set parent scene for a choice
 router.put('/:choiceId/parent', extractPathParam('choiceId'), async (req, res, next) => {
     const {
         choiceId
@@ -64,7 +68,7 @@ router.put('/:choiceId/parent', extractPathParam('choiceId'), async (req, res, n
     } = req.body;
 
     try {
-        ChoiceService.setParentScene(choiceId, parentSceneId)
+        await ChoiceService.setParentScene(choiceId, parentSceneId)
 
         res.status(200);
     } catch (err) {
@@ -72,6 +76,7 @@ router.put('/:choiceId/parent', extractPathParam('choiceId'), async (req, res, n
     }
 });
 
+// set next scene for a choice
 router.put('/:choiceId/next', extractPathParam('choiceId'), async (req, res, next) => {
     const {
         choiceId
@@ -81,7 +86,7 @@ router.put('/:choiceId/next', extractPathParam('choiceId'), async (req, res, nex
     } = req.body;
 
     try {
-        ChoiceService.setNextScene(choiceId, nextSceneId)
+        await ChoiceService.setNextScene(choiceId, nextSceneId)
 
         res.status(200);
     } catch (err) {
@@ -89,6 +94,7 @@ router.put('/:choiceId/next', extractPathParam('choiceId'), async (req, res, nex
     }
 });
 
+// update details
 router.put('/:choiceId/details', extractPathParam('choiceId'), async (req, res, next) => {
     const {
         sceneId
@@ -99,7 +105,7 @@ router.put('/:choiceId/details', extractPathParam('choiceId'), async (req, res, 
     } = req.body;
 
     try {
-        ChoiceService.setDetails(sceneId, title, content)
+        await ChoiceService.setDetails(sceneId, title, content)
 
         res.status(200);
     } catch (err) {

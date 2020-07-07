@@ -14,20 +14,14 @@ const create = async (authorId, title, description) => {
 const getById = async (storyId) => {
     const rows = await query('SELECT story WHERE id = $1', [storyId]);
     if (rows.length === 0) {
-        throw new ServerError('Unknown story', 400);
+        throw new ServerError('Unknown resource', 400);
     }
 
     return rows[0];
 }
 
 const setStartingScene = async (storyId, startingSceneId) => {
-    const scenes = await query('SELECT * FROM scene WHERE story_id = $1 AND id = $2', [storyId, startingSceneId]);
-    if (scenes.length === 0) {
-        throw new ServerError('Unknown scene', 400);
-    }
-
-    let scene = scenes[0];
-    const rows = await query('UPDATE story SET starting_scene_id = $1 WHERE id = $2', [scene.id, scene.story_id]);
+    const rows = await query('UPDATE story SET starting_scene_id = $2 WHERE id = $1', [storyId, startingSceneId]);
     return rows;
 }
 

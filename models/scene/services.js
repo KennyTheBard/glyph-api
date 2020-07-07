@@ -20,6 +20,15 @@ const getById = async (sceneId) => {
     return rows[0];
 }
 
+const getByIdAndStoryId = async (sceneId, storyId) => {
+    const rows = await query('SELECT scene WHERE id = $1 and story_id = $2', [sceneId, storyId]);
+    if (rows.length === 0) {
+        throw new ServerError('Unknown resource', 400);
+    }
+
+    return rows[0];
+}
+
 const setDetails = async (sceneId, title, content, template, note) => {
     const rows = await query('UPDATE scene SET title = $2, content = $3, template = $4, note = $5 ' +
             'WHERE id = $1', [sceneId, title, content, template, note]);
@@ -29,5 +38,6 @@ const setDetails = async (sceneId, title, content, template, note) => {
 module.exports = {
     create,
     getById,
+    getByIdAndStoryId,
     setDetails
 }
