@@ -3,6 +3,9 @@ const express = require('express');
 const StoryService = require('./services.js');
 const SceneService = require('../scene/services.js');
 const {
+    extractPathParam
+} = require('../../middleware/extract.js');
+const {
     ServerError
 } = require('../../errors');
 

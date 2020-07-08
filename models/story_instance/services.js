@@ -22,11 +22,7 @@ const getById = async (storyInstanceId) => {
 
 const getByStoryId = async (storyId) => {
     const rows = await query('SELECT story_instance WHERE story_id = $1', [storyId]);
-    if (rows.length === 0) {
-        throw new ServerError('Unknown resource', 400);
-    }
-
-    return rows[0];
+    return rows;
 }
 
 const setCurrentScene = async (storyInstanceId, currentSceneId) => {
