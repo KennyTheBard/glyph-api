@@ -1,6 +1,7 @@
 const express = require('express');
 
 const SceneService = require('./services.js');
+const StoryService = require('../story/services.js');
 const {
     ServerError
 } = require('../../errors');
@@ -22,7 +23,8 @@ router.post('/', async (req, res, next) => {
     } = req.body;
 
     try {
-        await SceneService.create(storyId, title, content, template, note)
+        await StoryService.getById(storyId);
+        await SceneService.create(storyId, title, content, template, note);
 
         res.status(201).end();
     } catch (err) {
@@ -36,7 +38,7 @@ router.get('/:sceneId', extractPathParam('sceneId'), async (req, res, next) => {
     } = req.params;
     
     try {
-        const scene = await SceneService.getById(sceneId)
+        const scene = await SceneService.getById(sceneId);
 
         res.json(scene);
     } catch (err) {
@@ -56,7 +58,7 @@ router.put('/:sceneId/details', extractPathParam('sceneId'), async (req, res, ne
     } = req.body;
 
     try {
-        await SceneService.setDetails(sceneId, title, content, template, note)
+        await SceneService.setDetails(sceneId, title, content, template, note);
 
         res.status(200);
     } catch (err) {
