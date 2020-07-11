@@ -26,6 +26,16 @@ router.post('/', async (req, res, next) => {
     }
 });
 
+router.get('/', extractPathParam('storyId'), async (req, res, next) => {
+    try {
+        const stories = await StoryService.getAll();
+
+        res.json(stories);
+    } catch (err) {
+        next(err);
+    }
+});
+
 router.get('/:storyId', extractPathParam('storyId'), async (req, res, next) => {
     const {
         storyId

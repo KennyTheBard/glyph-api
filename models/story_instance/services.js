@@ -12,7 +12,7 @@ const create = async (userId, currentSceneId) => {
 }
 
 const getById = async (storyInstanceId) => {
-    const rows = await query('SELECT story_instance WHERE id = $1', [storyInstanceId]);
+    const rows = await query('SELECT * FROM story_instance WHERE id = $1', [storyInstanceId]);
     if (rows.length === 0) {
         throw new ServerError('Unknown resource', 400);
     }
@@ -21,7 +21,7 @@ const getById = async (storyInstanceId) => {
 }
 
 const getByStoryId = async (storyId) => {
-    const rows = await query('SELECT story_instance WHERE story_id = $1', [storyId]);
+    const rows = await query('SELECT * FROM story_instance WHERE story_id = $1', [storyId]);
     return rows;
 }
 

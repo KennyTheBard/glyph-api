@@ -11,8 +11,13 @@ const create = async (authorId, title, description) => {
     return rows;
 }
 
+const getAll = async () => {
+    const rows = await query('SELECT * FROM story WHERE', [storyId]);
+    return rows;
+}
+
 const getById = async (storyId) => {
-    const rows = await query('SELECT story WHERE id = $1', [storyId]);
+    const rows = await query('SELECT * FROM story WHERE id = $1', [storyId]);
     if (rows.length === 0) {
         throw new ServerError('Unknown resource', 400);
     }
@@ -32,6 +37,7 @@ const setDetails = async (storyId, title, description) => {
 
 module.exports = {
     create,
+    getAll,
     getById,
     setStartingScene,
     setDetails

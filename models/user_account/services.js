@@ -36,7 +36,7 @@ const register = async (username, email, password, birth_date, activationCode) =
 };
 
 const authenticateByUsername = async (username, password) => {
-    const users = await query(`SELECT u.id, u.email, u.fullname, u.password, u.activated FROM user_account u
+    const users = await query(`SELECT u.id, u.email, u.password, u.activated FROM user_account u
                                 WHERE u.username = $1`, [username]);
 
     if (users.length === 0) {

@@ -12,7 +12,7 @@ const create = async (instanceId, variableId, value) => {
 }
 
 const getById = async (instanceVariableId) => {
-    const rows = await query('SELECT story_instance_variable WHERE id = $1', [instanceVariableId]);
+    const rows = await query('SELECT * FROM story_instance_variable WHERE id = $1', [instanceVariableId]);
     if (rows.length === 0) {
         throw new ServerError('Unknown resource', 400);
     }
@@ -21,12 +21,12 @@ const getById = async (instanceVariableId) => {
 }
 
 const getByInstanceId = async (instanceId) => {
-    const rows = await query('SELECT story_instance_variable WHERE story_instance_id = $1', [instanceId]);
+    const rows = await query('SELECT * FROM story_instance_variable WHERE story_instance_id = $1', [instanceId]);
     return rows;
 }
 
 const getByInstanceIdAndVariableId = async (instanceId, variableId) => {
-    const rows = await query('SELECT story_instance_variable WHERE story_instance_id = $1 AND story_variable_id = $2',
+    const rows = await query('SELECT * FROM story_instance_variable WHERE story_instance_id = $1 AND story_variable_id = $2',
             [instanceId, variableId]);
     return rows;
 }

@@ -11,12 +11,11 @@ const {
 
 const router = express.Router();
 
-// const templateRegex = '/\${([A-Z]|[a-z]|[0-9]|_|-)+}/g';
+// const templateVariableRegex = '/\${([A-Z]|[a-z]|[0-9]|_|-)+}/g';
 
 router.post('/', async (req, res, next) => {
     const {
         storyId,
-        title,
         content,
         template,
         note,
@@ -24,7 +23,7 @@ router.post('/', async (req, res, next) => {
 
     try {
         await StoryService.getById(storyId);
-        await SceneService.create(storyId, title, content, template, note);
+        await SceneService.create(storyId, content, template, note);
 
         res.status(201).end();
     } catch (err) {
@@ -51,14 +50,13 @@ router.put('/:sceneId/details', extractPathParam('sceneId'), async (req, res, ne
         sceneId
     } = req.params;
     const {
-        title,
         content,
         template,
         note,
     } = req.body;
 
     try {
-        await SceneService.setDetails(sceneId, title, content, template, note);
+        await SceneService.setDetails(sceneId, content, template, note);
 
         res.status(200);
     } catch (err) {

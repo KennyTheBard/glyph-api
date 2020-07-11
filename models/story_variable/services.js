@@ -21,7 +21,7 @@ const getById = async (varId) => {
 }
 
 const getByStoryId = async (storyId) => {
-    const rows = await query('SELECT story_variable WHERE story_id = $1', [storyId]);
+    const rows = await query('SELECT * FROM story_variable WHERE story_id = $1', [storyId]);
     return rows;
 }
 

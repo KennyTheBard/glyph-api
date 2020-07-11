@@ -13,6 +13,7 @@ const router = express.Router();
 // create
 router.post('/', async (req, res, next) => {
     const {
+        parentSceneId,
         title,
         content,
         template,
@@ -20,7 +21,7 @@ router.post('/', async (req, res, next) => {
     } = req.body;
 
     try {
-        await ChoiceService.create(title, content,template, note)
+        await ChoiceService.create(parentSceneId, title, content, template, note)
 
         res.status(201).end();
     } catch (err) {

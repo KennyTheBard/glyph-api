@@ -44,7 +44,6 @@ CREATE TABLE story_instance_variable (
 CREATE TABLE scene (
   id SERIAL PRIMARY KEY,
   story_id int,
-  title text,
   content text,
   template bool,
   note text,
@@ -55,7 +54,6 @@ CREATE TABLE choice (
   id SERIAL PRIMARY KEY,
   scene_id int,
   next_scene_id int,
-  title text,
   content text,
   template bool,
   note text,
