@@ -45,6 +45,7 @@ router.post('/login-username', async (req, res, next) => {
     try {
         const token = await UsersService.authenticateByUsername(username, password);
 
+        console.log(token);
         res.status(200).json(token);
     } catch (err) {
         next(err);
@@ -66,7 +67,7 @@ router.post('/login-email', async (req, res, next) => {
     }
 })
 
-router.put('/activate/:id/:code', async (req, res, next) => {
+router.get('/activate/:id/:code', async (req, res, next) => {
     const {
         id,
         code
@@ -74,11 +75,12 @@ router.put('/activate/:id/:code', async (req, res, next) => {
 
     try {
         const rows = await UsersService.activate(parseInt(id), code);
-        if (rows === 0) {
-            throw new ServerError('Eroare la activare!', 500)
+        console.log(rows)
+        if (rows.length === 0) {
+            throw new ServerError('Eroare la activare!', 500);
         }
 
-        res.status(200);
+        res.status(200).json({activated: true});
     } catch (err) {
         next(err);
     }

@@ -6,7 +6,7 @@ CREATE TABLE user_account (
   birth_date date,
   registration_date date,
   activated bool,
-  activationCode text
+  activation_code text
 );
 
 CREATE TABLE story (

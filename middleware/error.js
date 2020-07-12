@@ -15,7 +15,4 @@ const errorHandler = (param) => {
     }
 }
 
-
-module.exports = {
-    errorHandler
-}
+module.exports = errorHandler;

@@ -1,13 +1,12 @@
-import {errorHandler} from './middleware/error'
-
 const express = require('express');
 const morgan = require('morgan'); //middleware de logare
 const helmet = require('helmet'); //middleware de securitate
 const cors = require('cors'); //middleware de cors
 
-require('dotenv').config()
-
 const routes = require('./routes');
+const errorHandler = require('./middleware/error');
+
+require('dotenv').config()
 
 const app = express();
 
