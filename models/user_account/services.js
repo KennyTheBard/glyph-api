@@ -37,7 +37,7 @@ const register = async (username, email, password, birth_date, activationCode) =
 
 const authenticateByUsername = async (username, password) => {
     console.log(username, password);
-    const users = await query(`SELECT u.id, u.email, u.hash_password, u.activated FROM user_account u
+    const users = await query(`SELECT * FROM user_account u
                                 WHERE u.username = $1`, [username]);
 
     if (users.length === 0) {
@@ -68,7 +68,7 @@ const authenticateByUsername = async (username, password) => {
 };
 
 const authenticateByEmail = async (email, password) => {
-    const users = await query(`SELECT u.id, u.username, u.email, u.hash_password, u.activated FROM user_account u
+    const users = await query(`SELECT * FROM user_account u
                                 WHERE u.email = $1`, [email]);
 
     if (users.length === 0) {
@@ -99,8 +99,7 @@ const authenticateByEmail = async (email, password) => {
 };
 
 const activate = async (id, activationCode) => {
-    let rows = await query(`UPDATE user_account SET activated = TRUE WHERE id = $1 AND activation_code = $2`, [id, activationCode]);
-
+    const rows = await query(`UPDATE user_account SET activated = TRUE WHERE id = $1 AND activation_code = $2 RETURNING *`, [id, activationCode]);
     return rows
 };
 

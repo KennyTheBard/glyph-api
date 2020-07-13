@@ -75,7 +75,6 @@ router.get('/activate/:id/:code', async (req, res, next) => {
 
     try {
         const rows = await UsersService.activate(parseInt(id), code);
-        console.log(rows)
         if (rows.length === 0) {
             throw new ServerError('Eroare la activare!', 500);
         }

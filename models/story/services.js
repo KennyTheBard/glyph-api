@@ -12,7 +12,7 @@ const create = async (authorId, title, description) => {
 }
 
 const getAll = async () => {
-    const rows = await query('SELECT * FROM story WHERE', [storyId]);
+    const rows = await query('SELECT * FROM story', []);
     return rows;
 }
 

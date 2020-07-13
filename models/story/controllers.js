@@ -42,7 +42,7 @@ router.get('/:storyId', extractPathParam('storyId'), async (req, res, next) => {
     } = req.params;
     
     try {
-        const story = await StoryService.getById(storyId);
+        const story = await StoryService.getById(parseInt(storyId));
 
         res.json(story);
     } catch (err) {
@@ -59,8 +59,8 @@ router.put('/:storyId/starting-scene', extractPathParam('storyId'), async (req, 
     } = req.body;
 
     try {
-        await SceneService.getById(startingSceneId);
-        await StoryService.setStartingScene(storyId, startingSceneId);
+        await SceneService.getById(parseInt(startingSceneId));
+        await StoryService.setStartingScene(parseInt(storyId), parseInt(startingSceneId));
 
         res.status(200);
     } catch (err) {
@@ -78,7 +78,7 @@ router.put('/:storyId/details', extractPathParam('storyId'), async (req, res, ne
     } = req.body;
 
     try {
-        await StoryService.setDetails(storyId, title, description);
+        await StoryService.setDetails(parseInt(storyId), title, description);
 
         res.status(200);
     } catch (err) {
