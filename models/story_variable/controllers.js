@@ -13,7 +13,9 @@ const router = express.Router();
 
 router.post('/', async (req, res, next) => {
     const {
-        storyId,
+        storyId
+    } = req.state;
+    const {
         name,
         type,
         defaultValue,
@@ -21,8 +23,8 @@ router.post('/', async (req, res, next) => {
     } = req.body;
 
     try {
-        await StoryService.getById(storyId);
-        VariableService.create(storyId, name, type, defaultValue, note);
+        await StoryService.getById(parseInt(storyId));
+        VariableService.create(parseInt(storyId), name, type, defaultValue, note);
 
         res.status(201).end();
     } catch (err) {
@@ -33,10 +35,10 @@ router.post('/', async (req, res, next) => {
 router.get('/:varId', extractPathParam('varId'), async (req, res, next) => {
     const {
         varId
-    } = req.params;
+    } = req.state;
     
     try {
-        const variable = VariableService.getById(varId)
+        const variable = VariableService.getById(parseInt(varId));
 
         res.json(variable);
     } catch (err) {
@@ -47,10 +49,10 @@ router.get('/:varId', extractPathParam('varId'), async (req, res, next) => {
 router.get('/:storyId/all', extractPathParam('storyId'), async (req, res, next) => {
     const {
         storyId
-    } = req.params;
+    } = req.state;
     
     try {
-        const variables = VariableService.getByStoryId(storyId)
+        const variables = VariableService.getByStoryId(parseInt(storyId));
 
         res.json(variables);
     } catch (err) {
@@ -61,13 +63,13 @@ router.get('/:storyId/all', extractPathParam('storyId'), async (req, res, next) 
 router.put('/:varId/default-value', extractPathParam('varId'), async (req, res, next) => {
     const {
         varId
-    } = req.params;
+    } = req.state;
     const {
         defaultValue,
     } = req.body;
 
     try {
-        await VariableService.setDefaulValue(varId, defaultValue)
+        await VariableService.setDefaulValue(parseInt(varId), defaultValue);
 
         res.status(200);
     } catch (err) {

@@ -18,9 +18,9 @@ router.post('/', async (req, res, next) => {
     } = req.body;
 
     try {
-        await StoryService.create(req.state.decoded.userId, title, description);
+        const rows = await StoryService.create(req.state.decoded.userId, title, description);
 
-        res.status(201).end();
+        res.status(201).json(rows[0]).end();
     } catch (err) {
         next(err);
     }

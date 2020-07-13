@@ -20,6 +20,11 @@ const getById = async (sceneId) => {
     return rows[0];
 }
 
+const getByStoryId = async (storyId) => {
+    const rows = await query('SELECT * FROM scene WHERE story_id = $1', [storyId]);
+    return rows;
+}
+
 const getByIdAndStoryId = async (sceneId, storyId) => {
     const rows = await query('SELECT * FROM scene WHERE id = $1 and story_id = $2', [sceneId, storyId]);
     if (rows.length === 0) {
@@ -38,6 +43,7 @@ const setDetails = async (sceneId, content, template, note) => {
 module.exports = {
     create,
     getById,
+    getByStoryId,
     getByIdAndStoryId,
     setDetails
 }

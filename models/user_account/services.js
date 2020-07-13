@@ -36,7 +36,6 @@ const register = async (username, email, password, birth_date, activationCode) =
 };
 
 const authenticateByUsername = async (username, password) => {
-    console.log(username, password);
     const users = await query(`SELECT * FROM user_account u
                                 WHERE u.username = $1`, [username]);
 

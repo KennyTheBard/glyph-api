@@ -45,7 +45,6 @@ router.post('/login-username', async (req, res, next) => {
     try {
         const token = await UsersService.authenticateByUsername(username, password);
 
-        console.log(token);
         res.status(200).json(token);
     } catch (err) {
         next(err);

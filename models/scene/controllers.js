@@ -16,16 +16,34 @@ const router = express.Router();
 router.post('/', async (req, res, next) => {
     const {
         storyId,
+    } = req.state;
+    const {
         content,
         template,
         note,
     } = req.body;
 
+    console.log(storyId, parseInt(storyId))
+
     try {
-        await StoryService.getById(storyId);
-        await SceneService.create(storyId, content, template, note);
+        await StoryService.getById(parseInt(storyId));
+        await SceneService.create(parseInt(storyId), content, template, note);
 
         res.status(201).end();
+    } catch (err) {
+        next(err);
+    }
+});
+
+router.get('', async (req, res, next) => {
+    const {
+        storyId
+    } = req.state;
+    
+    try {
+        const scenes = await SceneService.getByStoryId(parseInt(storyId));
+
+        res.json(scenes);
     } catch (err) {
         next(err);
     }
@@ -34,10 +52,10 @@ router.post('/', async (req, res, next) => {
 router.get('/:sceneId', extractPathParam('sceneId'), async (req, res, next) => {
     const {
         sceneId
-    } = req.params;
+    } = req.state;
     
     try {
-        const scene = await SceneService.getById(sceneId);
+        const scene = await SceneService.getById(parseInt(sceneId));
 
         res.json(scene);
     } catch (err) {
@@ -48,7 +66,7 @@ router.get('/:sceneId', extractPathParam('sceneId'), async (req, res, next) => {
 router.put('/:sceneId/details', extractPathParam('sceneId'), async (req, res, next) => {
     const {
         sceneId
-    } = req.params;
+    } = req.state;
     const {
         content,
         template,
@@ -56,7 +74,7 @@ router.put('/:sceneId/details', extractPathParam('sceneId'), async (req, res, ne
     } = req.body;
 
     try {
-        await SceneService.setDetails(sceneId, content, template, note);
+        await SceneService.setDetails(parseInt(sceneId), content, template, note);
 
         res.status(200);
     } catch (err) {
