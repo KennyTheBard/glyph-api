@@ -5,9 +5,9 @@ const {
     ServerError
 } = require('../../errors')
 
-const create = async (parentSceneId, title, content, template, note) => {
-    const rows = await query('INSERT INTO choice (parent_scene_id, title, content, template, note)' +
-            'VALUES ($1, $2, $3, $4, $5) RETURNING *', [parentSceneId, title, content, template, note]);
+const create = async (parentSceneId, content, template, note) => {
+    const rows = await query('INSERT INTO choice (parent_scene_id, content, template, note)' +
+            'VALUES ($1, $2, $3, $4) RETURNING *', [parentSceneId, content, template, note]);
     return rows;
 }
 
@@ -35,8 +35,8 @@ const setNextScene = async (choiceId, nextSceneId) => {
     return rows;
 }
 
-const setDetails = async (sceneId, title, content, note) => {
-    const rows = await query('UPDATE choice SET title = $2, content = $3, note = $4 WHERE id = $1', [sceneId, title, content]);
+const setDetails = async (sceneId, content, note) => {
+    const rows = await query('UPDATE choice SET content = $2, note = $3 WHERE id = $1', [sceneId, content, note]);
     return rows;
 }
 

@@ -14,14 +14,13 @@ const router = express.Router();
 router.post('/', async (req, res, next) => {
     const {
         parentSceneId,
-        title,
         content,
         template,
         note,
     } = req.body;
 
     try {
-        await ChoiceService.create(parseInt(parentSceneId), title, content, template, note)
+        await ChoiceService.create(parseInt(parentSceneId), content, template, note)
 
         res.status(201).end();
     } catch (err) {
@@ -98,17 +97,17 @@ router.put('/:choiceId/next', extractPathParam('choiceId'), async (req, res, nex
 // update details
 router.put('/:choiceId/details', extractPathParam('choiceId'), async (req, res, next) => {
     const {
-        sceneId
+        choiceId
     } = req.state;
     const {
-        title,
         content,
+        note,
     } = req.body;
 
     try {
-        await ChoiceService.setDetails(parseInt(sceneId), title, content)
+        await ChoiceService.setDetails(parseInt(choiceId), content, note)
 
-        res.status(200);
+        res.status(200).end();
     } catch (err) {
         next(err);
     }

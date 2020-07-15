@@ -52,7 +52,7 @@ CREATE TABLE scene (
 
 CREATE TABLE choice (
   id SERIAL PRIMARY KEY,
-  scene_id int,
+  parent_scene_id int,
   next_scene_id int,
   content text,
   template bool,
