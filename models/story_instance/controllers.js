@@ -30,12 +30,12 @@ router.post('/', async (req, res, next) => {
 router.get('/:storyInstanceId', extractPathParam('storyInstanceId'), async (req, res, next) => {
     const {
         storyInstanceId
-    } = req.params;
+    } = req.state;
     
     try {
         const instance = StoryInstanceService.getById(storyInstanceId)
 
-        res.json(instance);
+        res.json(instance).end();
     } catch (err) {
         next(err);
     }
@@ -44,7 +44,7 @@ router.get('/:storyInstanceId', extractPathParam('storyInstanceId'), async (req,
 router.put('/:storyInstanceId/current-scene', extractPathParam('storyInstanceId'), async (req, res, next) => {
     const {
         storyInstanceId
-    } = req.params;
+    } = req.state;
     const {
         currentSceneId,
     } = req.body;
@@ -53,7 +53,7 @@ router.put('/:storyInstanceId/current-scene', extractPathParam('storyInstanceId'
         await SceneService.getByIdAndStoryId(storyInstanceId, currentSceneId)
         await StoryInstanceService.setCurrentScene(storyInstanceId, currentSceneId)
 
-        res.status(200);
+        res.status(200).end();
     } catch (err) {
         next(err);
     }

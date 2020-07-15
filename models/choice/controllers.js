@@ -70,7 +70,7 @@ router.put('/:choiceId/parent', extractPathParam('choiceId'), async (req, res, n
     try {
         await ChoiceService.setParentScene(parseInt(choiceId), parseInt(parentSceneId))
 
-        res.status(200);
+        res.status(200).end();
     } catch (err) {
         next(err);
     }
@@ -88,7 +88,7 @@ router.put('/:choiceId/next', extractPathParam('choiceId'), async (req, res, nex
     try {
         await ChoiceService.setNextScene(parseInt(choiceId), parseInt(nextSceneId))
 
-        res.status(200);
+        res.status(200).end();
     } catch (err) {
         next(err);
     }

@@ -23,8 +23,6 @@ router.post('/', async (req, res, next) => {
         note,
     } = req.body;
 
-    console.log(storyId, parseInt(storyId))
-
     try {
         await StoryService.getById(parseInt(storyId));
         await SceneService.create(parseInt(storyId), content, template, note);
@@ -76,7 +74,7 @@ router.put('/:sceneId/details', extractPathParam('sceneId'), async (req, res, ne
     try {
         await SceneService.setDetails(parseInt(sceneId), content, template, note);
 
-        res.status(200);
+        res.status(200).end();
     } catch (err) {
         next(err);
     }

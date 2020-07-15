@@ -20,7 +20,7 @@ router.post('/', async (req, res, next) => {
     try {
         const rows = await StoryService.create(req.state.decoded.userId, title, description);
 
-        res.status(201).json(rows[0]).end();
+        res.status(201).json(rows[0]);
     } catch (err) {
         next(err);
     }
@@ -62,7 +62,7 @@ router.put('/:storyId/starting-scene', extractPathParam('storyId'), async (req, 
         await SceneService.getById(parseInt(startingSceneId));
         await StoryService.setStartingScene(parseInt(storyId), parseInt(startingSceneId));
 
-        res.status(200);
+        res.status(200).end();
     } catch (err) {
         next(err);
     }
@@ -71,7 +71,7 @@ router.put('/:storyId/starting-scene', extractPathParam('storyId'), async (req, 
 router.put('/:storyId/details', extractPathParam('storyId'), async (req, res, next) => {
     const {
         storyId
-    } = req.params;
+    } = req.state;
     const {
         title,
         description,
@@ -80,7 +80,7 @@ router.put('/:storyId/details', extractPathParam('storyId'), async (req, res, ne
     try {
         await StoryService.setDetails(parseInt(storyId), title, description);
 
-        res.status(200);
+        res.status(200).end();
     } catch (err) {
         next(err);
     }
