@@ -1,5 +1,6 @@
 const express = require('express');
 const crypto = require('crypto');
+const humps = require('humps');
 
 const UsersService = require('./services.js');
 const {
@@ -45,7 +46,7 @@ router.post('/login-username', async (req, res, next) => {
     try {
         const token = await UsersService.authenticateByUsername(username, password);
 
-        res.status(200).json(token);
+        res.status(200).json(humps.camelizeKeys(token));
     } catch (err) {
         next(err);
     }
@@ -60,7 +61,7 @@ router.post('/login-email', async (req, res, next) => {
     try {
         const token = await UsersService.authenticateByEmail(email, password);
 
-        res.status(200).json(token);
+        res.status(200).json(humps.camelizeKeys(token));
     } catch (err) {
         next(err);
     }

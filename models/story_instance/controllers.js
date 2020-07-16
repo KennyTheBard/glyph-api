@@ -1,4 +1,5 @@
 const express = require('express');
+const humps = require('humps');
 
 const StoryInstanceService = require('./services.js');
 const StoryService = require('../story/services.js');
@@ -35,7 +36,7 @@ router.get('/:storyInstanceId', extractPathParam('storyInstanceId'), async (req,
     try {
         const instance = StoryInstanceService.getById(storyInstanceId)
 
-        res.json(instance).end();
+        res.json(humps.camelizeKeys(instance));
     } catch (err) {
         next(err);
     }

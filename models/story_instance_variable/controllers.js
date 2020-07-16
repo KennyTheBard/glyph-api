@@ -1,4 +1,5 @@
 const express = require('express');
+const humps = require('humps');
 
 const InstanceVariableService = require('./services.js');
 const VariableService = require('../story_variable/services.js');
@@ -22,7 +23,7 @@ router.get('/:instanceId/:variableId', extractPathParam('instanceId'),
     try {
         const variables = await InstanceVariableService.getByInstanceIdAndVariableId(instanceId, variableId)
 
-        res.json(variables);
+        res.json(humps.camelizeKeys(variables));
     } catch (err) {
         next(err);
     }
@@ -36,7 +37,7 @@ router.get('/:instanceId/all', extractPathParam('instanceId'), async (req, res, 
     try {
         const variables = await InstanceVariableService.getByInstanceId(instanceId)
 
-        res.json(variables[0]);
+        res.json(humps.camelizeKeys(variables[0]));
     } catch (err) {
         next(err);
     }

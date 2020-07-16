@@ -3,11 +3,7 @@ const validator = require('validator');
 const {
     ServerError
 } = require('../errors');
-/**
- * 
- * @param {*} field 
- * @throws {ServerError}
- */
+
 const validateFields = (fields) => {
     
     for (let fieldName in fields) {

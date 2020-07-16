@@ -6,7 +6,7 @@ const {
 
 const {
     validateFields
-} = require('../../utils');
+} = require('../../utils/validate.js');
 
 const generateToken = async (payload) => {
     try {

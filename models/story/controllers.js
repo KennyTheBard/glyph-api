@@ -1,4 +1,5 @@
 const express = require('express');
+const humps = require('humps');
 
 const StoryService = require('./services.js');
 const SceneService = require('../scene/services.js');
@@ -20,7 +21,7 @@ router.post('/', async (req, res, next) => {
     try {
         const rows = await StoryService.create(req.state.decoded.userId, title, description);
 
-        res.status(201).json(rows[0]);
+        res.status(201).json(humps.camelizeKeys(rows[0]));
     } catch (err) {
         next(err);
     }
@@ -30,7 +31,7 @@ router.get('/', extractPathParam('storyId'), async (req, res, next) => {
     try {
         const stories = await StoryService.getAll();
 
-        res.json(stories);
+        res.json(humps.camelizeKeys(stories));
     } catch (err) {
         next(err);
     }
@@ -44,7 +45,7 @@ router.get('/:storyId', extractPathParam('storyId'), async (req, res, next) => {
     try {
         const story = await StoryService.getById(parseInt(storyId));
 
-        res.json(story);
+        res.json(humps.camelizeKeys(story));
     } catch (err) {
         next(err);
     }

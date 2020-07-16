@@ -1,4 +1,5 @@
 const express = require('express');
+const humps = require('humps');
 
 const VariableService = require('./services.js');
 const StoryService = require('../story/services.js');
@@ -40,7 +41,7 @@ router.get('/:varId', extractPathParam('varId'), async (req, res, next) => {
     try {
         const variable = VariableService.getById(parseInt(varId));
 
-        res.json(variable);
+        res.json(humps.camelizeKeys(variable));
     } catch (err) {
         next(err);
     }
@@ -54,7 +55,7 @@ router.get('/:storyId/all', extractPathParam('storyId'), async (req, res, next) 
     try {
         const variables = VariableService.getByStoryId(parseInt(storyId));
 
-        res.json(variables);
+        res.json(humps.camelizeKeys(variables));
     } catch (err) {
         next(err);
     }

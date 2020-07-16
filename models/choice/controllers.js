@@ -1,4 +1,5 @@
 const express = require('express');
+const humps = require('humps');
 
 const ChoiceService = require('./services.js');
 const {
@@ -37,7 +38,7 @@ router.get('/:choiceId', extractPathParam('choiceId'), async (req, res, next) =>
     try {
         const scene = await ChoiceService.getById(parseInt(choiceId))
 
-        res.json(scene);
+        res.json(humps.camelizeKeys(scene));
     } catch (err) {
         next(err);
     }
@@ -52,7 +53,7 @@ router.get('/all/:sceneId', extractPathParam('sceneId'), async (req, res, next) 
     try {
         const scenes = await ChoiceService.getAllBySceneId(parseInt(sceneId))
 
-        res.json(scenes);
+        res.json(humps.camelizeKeys(scenes));
     } catch (err) {
         next(err);
     }
