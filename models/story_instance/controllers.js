@@ -28,15 +28,20 @@ router.post('/', async (req, res, next) => {
     }
 });
 
-router.get('/:storyInstanceId', extractPathParam('storyInstanceId'), async (req, res, next) => {
+router.get('/', extractPathParam('storyId'), async (req, res, next) => {
     const {
-        storyInstanceId
+        storyId,
+        decoded
     } = req.state;
-    
-    try {
-        const instance = StoryInstanceService.getById(storyInstanceId)
+    const {
+        userId
+    } = decoded;
 
-        res.json(humps.camelizeKeys(instance));
+
+    try {
+        const instances = StoryInstanceService.getByUserIdAndStoryId(userId, storyId)
+
+        res.json(humps.camelizeKeys(instances));
     } catch (err) {
         next(err);
     }

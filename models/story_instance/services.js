@@ -20,8 +20,14 @@ const getById = async (storyInstanceId) => {
     return rows[0];
 }
 
-const getByStoryId = async (storyId) => {
-    const rows = await query('SELECT * FROM story_instance WHERE story_id = $1', [storyId]);
+const getByUserId = async (userId) => {
+    const rows = await query('SELECT * FROM story_instance WHERE user_id = $1', [userId]);
+    return rows;
+}
+
+const getByUserIdAndStoryId = async (userId, storyId) => {
+    const rows = await query('SELECT * FROM story_instance WHERE ' +
+        'user_id = $1 AND story_id = $2', [user_id, storyId]);
     return rows;
 }
 
@@ -34,6 +40,7 @@ const setCurrentScene = async (storyInstanceId, currentSceneId) => {
 module.exports = {
     create,
     getById,
-    getByStoryId,
+    getByUserId,
+    getByUserIdAndStoryId,
     setCurrentScene,
 }
