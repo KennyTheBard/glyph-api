@@ -32,7 +32,7 @@ const getByUserIdAndStoryId = async (userId, storyId) => {
 }
 
 const setCurrentScene = async (storyInstanceId, currentSceneId) => {
-    const rows = await query('UPDATE story_instance SET current_scene_id = $2 WHERE id = $1',
+    const rows = await query('UPDATE story_instance SET current_scene_id = $2 WHERE id = $1 RETURNING *',
             [storyInstanceId, currentSceneId]);
     return rows;
 }

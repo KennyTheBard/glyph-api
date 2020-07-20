@@ -20,7 +20,7 @@ const getById = async (choiceId) => {
     return rows[0];
 }
 
-const getAllBySceneId = async (sceneId) => {
+const getAllByParentSceneId = async (sceneId) => {
     const rows = await query('SELECT * FROM choice WHERE parent_scene_id = $1', [sceneId]);
     return rows;
 }
@@ -43,7 +43,7 @@ const setDetails = async (sceneId, content, note) => {
 module.exports = {
     create,
     getById,
-    getAllBySceneId,
+    getAllByParentSceneId,
     setParentScene,
     setNextScene,
     setDetails
