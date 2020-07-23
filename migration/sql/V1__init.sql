@@ -86,7 +86,7 @@ ALTER TABLE story_instance_variable ADD FOREIGN KEY (story_variable_id) REFERENC
 
 ALTER TABLE scene ADD FOREIGN KEY (story_id) REFERENCES story (id);
 
-ALTER TABLE choice ADD FOREIGN KEY (scene_id) REFERENCES scene (id);
+ALTER TABLE choice ADD FOREIGN KEY (parent_scene_id) REFERENCES scene (id);
 
 ALTER TABLE choice ADD FOREIGN KEY (next_scene_id) REFERENCES scene (id);
 

@@ -5,7 +5,8 @@
   "main": "start.js",
   "scripts": {
     "start-prod": "node start.js",
-    "start": "nodemon -r dotenv/config start.js"
+    "start": "nodemon -r dotenv/config start.js",
+    "migrate": "flyway -c migration/flyway.js migrate"
   },
   "repository": {
     "type": "git",
@@ -27,6 +28,7 @@
     "mongodb": "^3.5.4",
     "mongoose": "^5.9.3",
     "morgan": "^1.9.1",
+    "node-flywaydb": "^3.0.3",
     "nodemailer": "^6.4.6",
     "pg": "^7.18.2",
     "validator": "^13.1.1"
