@@ -29,7 +29,7 @@ Router.use('/story/:storyId/choice',
             ChoiceRoute);
 
             
-Router.use('/story/:storyId/story_instance',
+Router.use('/story/:storyId/story-instance',
             Security.authorizeAndExtractToken,
             extractPathParam('storyId'),
             InstanceRoute);

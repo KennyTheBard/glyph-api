@@ -5,9 +5,9 @@ const {
     ServerError
 } = require('../../errors')
 
-const create = async (userId, currentSceneId) => {
-    const rows = await query('INSERT INTO story_instance (user_id, current_scene_id)' +
-            'VALUES ($1, $2) RETURNING *', [userId, currentSceneId]);
+const create = async (userId, storyId, currentSceneId) => {
+    const rows = await query('INSERT INTO story_instance (user_id, story_id, current_scene_id)' +
+            'VALUES ($1, $2, $3) RETURNING *', [userId, storyId, currentSceneId]);
     return rows;
 }
 
@@ -27,7 +27,7 @@ const getByUserId = async (userId) => {
 
 const getByUserIdAndStoryId = async (userId, storyId) => {
     const rows = await query('SELECT * FROM story_instance WHERE ' +
-        'user_id = $1 AND story_id = $2', [user_id, storyId]);
+        'user_id = $1 AND story_id = $2', [userId, storyId]);
     return rows;
 }
 

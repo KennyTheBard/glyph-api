@@ -51,7 +51,7 @@ router.get('/all/:sceneId', extractPathParam('sceneId'), async (req, res, next) 
     } = req.state;
     
     try {
-        const scenes = await ChoiceService.getAllBySceneId(parseInt(sceneId))
+        const scenes = await ChoiceService.getAllByParentSceneId(parseInt(sceneId))
 
         res.json(humps.camelizeKeys(scenes));
     } catch (err) {

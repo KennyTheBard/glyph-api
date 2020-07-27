@@ -20,10 +20,18 @@ router.post('/', async (req, res, next) => {
         storyId,
         decoded,
     } = req.state;
+    const {
+        userId,
+    } = decoded;
 
     try {
         const story = humps.camelizeKeys(await StoryService.getById(storyId));
-        const instances = await StoryInstanceService.create(decoded.userId, story.startingSceneId);
+        if ((await StoryInstanceService.getByUserIdAndStoryId(parseInt(userId), parseInt(storyId))).length > 0) {
+            res.status(500).json({
+                error: 'there is already an unfinished story instance',
+            });
+        } 
+        const instances = await StoryInstanceService.create(decoded.userId, story.id, story.startingSceneId);
 
         res.status(201).json(humps.camelizeKeys(instances[0]));
     } catch (err) {
@@ -44,8 +52,7 @@ router.post('/:storyInstanceId/choose', extractPathParam('storyInstanceId'), asy
     try {
         const instance = humps.camelizeKeys(await StoryInstanceService.getById(parseInt(storyInstanceId)));
         let choices = humps.camelizeKeys(await ChoiceService.getAllByParentSceneId(instance.currentSceneId))
-            .filter((c) => c.storyId === parseInt(storyId))
-            .filter((c) => c.id === parseInt(choiceId));
+            .filter((c) => parseInt(c.id) === parseInt(choiceId));
         
         if (choices.length === 0) {
             throw new ServerError("No choice found by that ID to that scene", 400)
@@ -94,6 +101,9 @@ router.get('/:storyInstanceId/current', extractPathParam('storyInstanceId'), asy
         storyId,
         decoded
     } = req.state;
+    const {
+        userId
+    } = decoded;
 
     try {
         const instance = humps.camelizeKeys(await StoryInstanceService.getById(parseInt(storyInstanceId)));
@@ -102,7 +112,7 @@ router.get('/:storyInstanceId/current', extractPathParam('storyInstanceId'), asy
             throw new ServerError('Unknown resource', 404); 
         }
 
-        if (instance.userId !== parseInt(decoded.id)) {
+        if (instance.userId !== parseInt(userId)) {
             throw new ServerError('Access denied', 405); 
         }
 
