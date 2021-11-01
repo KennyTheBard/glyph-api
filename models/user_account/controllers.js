@@ -12,7 +12,7 @@ const {
 
 const router = express.Router();
 
-router.post('/register', async (req, res, next) => {
+router.post('/register', async(req, res, next) => {
     const {
         username,
         email,
@@ -37,7 +37,7 @@ router.post('/register', async (req, res, next) => {
     }
 });
 
-router.post('/login-username', async (req, res, next) => {
+router.post('/login-username', async(req, res, next) => {
     const {
         username,
         password
@@ -52,7 +52,7 @@ router.post('/login-username', async (req, res, next) => {
     }
 })
 
-router.post('/login-email', async (req, res, next) => {
+router.post('/login-email', async(req, res, next) => {
     const {
         email,
         password
@@ -67,7 +67,7 @@ router.post('/login-email', async (req, res, next) => {
     }
 })
 
-router.get('/activate/:id/:code', async (req, res, next) => {
+router.get('/activate/:id/:code', async(req, res, next) => {
     const {
         id,
         code
@@ -79,7 +79,7 @@ router.get('/activate/:id/:code', async (req, res, next) => {
             throw new ServerError('Eroare la activare!', 500);
         }
 
-        res.status(200).json({activated: true});
+        res.status(200).json({ activated: true });
     } catch (err) {
         next(err);
     }

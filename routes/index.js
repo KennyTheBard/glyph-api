@@ -1,6 +1,6 @@
 const Router = require('express')();
 
-const Security = require('../security/Jwt/index.js');
+const Security = require('../security/jwt/index.js');
 
 const { extractPathParam } = require('../middleware/extract.js');
 
@@ -12,26 +12,26 @@ const ChoiceRoute = require('../models/choice/controllers.js');
 const InstanceRoute = require('../models/story_instance/controllers.js');
 
 Router.use('/user',
-            UserRoute);
+    UserRoute);
 
 Router.use('/story',
-            Security.authorizeAndExtractToken,
-            StoryRoute);
+    Security.authorizeAndExtractToken,
+    StoryRoute);
 
 Router.use('/story/:storyId/scene',
-            Security.authorizeAndExtractToken,
-            extractPathParam('storyId'),
-            SceneRoute);
+    Security.authorizeAndExtractToken,
+    extractPathParam('storyId'),
+    SceneRoute);
 
 Router.use('/story/:storyId/choice',
-            Security.authorizeAndExtractToken,
-            extractPathParam('storyId'),
-            ChoiceRoute);
+    Security.authorizeAndExtractToken,
+    extractPathParam('storyId'),
+    ChoiceRoute);
 
-            
+
 Router.use('/story/:storyId/story-instance',
-            Security.authorizeAndExtractToken,
-            extractPathParam('storyId'),
-            InstanceRoute);
+    Security.authorizeAndExtractToken,
+    extractPathParam('storyId'),
+    InstanceRoute);
 
 module.exports = Router;

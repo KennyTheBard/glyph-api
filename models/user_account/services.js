@@ -13,7 +13,7 @@ const {
 } = require('../../errors');
 
 
-const register = async (username, email, password, birth_date, activationCode) => {
+const register = async(username, email, password, birth_date, activationCode) => {
     // check uniqueness by username
     const usersByUsername = await query(`SELECT u.id, u.hash_password FROM user_account u
                                 WHERE u.username = $1`, [username]);
@@ -35,7 +35,7 @@ const register = async (username, email, password, birth_date, activationCode) =
     return ret[0].id;
 };
 
-const authenticateByUsername = async (username, password) => {
+const authenticateByUsername = async(username, password) => {
     const users = await query(`SELECT * FROM user_account u
                                 WHERE u.username = $1`, [username]);
 
@@ -66,7 +66,7 @@ const authenticateByUsername = async (username, password) => {
     return token
 };
 
-const authenticateByEmail = async (email, password) => {
+const authenticateByEmail = async(email, password) => {
     const users = await query(`SELECT * FROM user_account u
                                 WHERE u.email = $1`, [email]);
 
@@ -97,12 +97,12 @@ const authenticateByEmail = async (email, password) => {
     return token
 };
 
-const activate = async (id, activationCode) => {
+const activate = async(id, activationCode) => {
     const rows = await query(`UPDATE user_account SET activated = TRUE WHERE id = $1 AND activation_code = $2 RETURNING *`, [id, activationCode]);
     return rows
 };
 
-const getById = async (id) => {
+const getById = async(id) => {
     const users = await query(`SELECT * FROM user_account WHERE id = $1`, [id]);
     return users
 };
@@ -111,6 +111,6 @@ module.exports = {
     register,
     authenticateByUsername,
     authenticateByEmail,
-    activate, 
+    activate,
     getById
 }
